@@ -27,3 +27,11 @@ $ docker-compose up
 ```
 http://localhost:8000
 ```
+
+#### Comandos uteis
+
+```
+php artisan make:model Models/NomeDoModel --all
+php artisan migrate --seed
+php artisan make:seeder NomeDaSeeder
+```
