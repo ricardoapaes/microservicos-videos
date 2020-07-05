@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Unit\Models;
 
 use App\Models\Category;
 use App\Models\Traits\Uuid;
@@ -30,7 +30,7 @@ class CategoryTest extends TestCase
 
     public function testDates() {
         $dates = ['deleted_at', 'created_at', 'updated_at'];
-        $this->assertEquals($dates, array_values($this->category->getDates()));
+        $this->assertEqualsCanonicalizing($dates, $this->category->getDates());
     }
 
     public function testCasts() {
