@@ -100,4 +100,59 @@ class CategoryControllerTest extends TestCase {
             ]);
     }
 
+    public function testStore() {
+        $response = $this->json('POST', $this->getRoute('store'), [
+            'name' => 'Teste 01'
+        ]);
+
+        $id = $response->json('id');
+        $category = Category::find($id);
+
+        $response
+            ->assertStatus(201)
+            ->assertJson($category->toArray());
+
+        $response = $this->json('POST', $this->getRoute('store'), [
+            'name' => 'Teste 02',
+            'description' => 'Descrição',
+            'is_active' => false
+        ]);
+
+        $response
+            ->assertStatus(201)
+            ->assertJsonFragment([
+                'description' => 'Descrição',
+                'is_active' => false
+            ]);
+    }
+
+    public function testUpdate() {
+        /** @var Category $category */
+        $category = factory(Category::class)->create();
+
+        $response = $this->json('PUT', $this->getRoute('update', ['category'=>$category->id]), [
+            'name' => 'Teste 01'
+        ]);
+
+        $id = $response->json('id');
+        $category = Category::find($id);
+
+        $response
+            ->assertStatus(200)
+            ->assertJson($category->toArray());
+
+        $response = $this->json('PUT', $this->getRoute('update', ['category'=>$category->id]), [
+            'name' => 'Teste 02',
+            'description' => '',
+            'is_active' => false
+        ]);
+
+        $response
+            ->assertStatus(200)
+            ->assertJsonFragment([
+                'description' => null,
+                'is_active' => false
+            ]);
+    }
+
 }
