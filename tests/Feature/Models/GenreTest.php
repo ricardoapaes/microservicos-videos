@@ -23,10 +23,22 @@ class GenreTest extends TestCase {
         );
     }
 
+    public function testDelete() {
+        /** @var Genre $genre */
+        $genre = factory(Genre::class)->create();
+
+        $genre->delete();
+        $this->assertNull(Genre::find($genre->id));
+
+        $genre->restore();
+        $this->assertNotNull(Genre::find($genre->id));
+    }
+
     public function testCreateNoDescription() {
         $genre = Genre::create(['name' => 'Teste 01']);
         $genre->refresh();
 
+        $this->assertEquals(36, strlen($genre->id));
         $this->assertEquals('Teste 01', $genre->name);
         $this->assertTrue($genre->is_active);
     }
