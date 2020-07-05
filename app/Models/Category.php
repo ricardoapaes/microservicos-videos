@@ -30,6 +30,8 @@ class Category extends Model
 {
     use SoftDeletes, Uuid;
 
+    const NAME_MAX_LENGTH = 255;
+
     protected $fillable = ['name', 'description', 'is_active'];
     protected $dates = ['deleted_at'];
     protected $casts = [
